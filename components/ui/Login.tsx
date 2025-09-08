@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff } from 'lucide-react'
 
@@ -146,7 +146,7 @@ const LoginPage = () => {
 
               {/* Sign Up Link */}
               <p className="text-center text-sm text-gray-600">
-                Don't have an account?{' '}
+                "Don't have an account?"{' '}
                 <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">
                   Sign up
                 </a>

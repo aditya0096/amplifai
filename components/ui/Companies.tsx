@@ -17,7 +17,9 @@ import {
 import Sidebar from "@/components/layout/Sidebar";
 
 
+
 import { useCompanies } from "@/components/providers/CompaniesProvider";
+import type { Company } from "@/components/providers/CompaniesProvider";
 
 
 const ITEMS_PER_PAGE = 10;
@@ -32,19 +34,24 @@ const Companies = () => {
 
   // Filter and sort companies
   const filteredAndSortedCompanies = useMemo(() => {
-    let filtered = companies.filter(company =>
+    const filtered = companies.filter(company =>
       company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       company.ceo.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // Helper to get property value safely
-    const getValue = (company: typeof companies[0], field: string) => {
+    const getValue = (company: Company, field: string) => {
       if (field === 'ceo') return company.ceo.name;
       if (field === 'revenue' || field === 'profit') {
-        return parseFloat((company as any)[field].replace('€', '').replace('M', ''));
+        // company.revenue and company.profit are strings like '€245M'
+        return parseFloat(company[field as 'revenue' | 'profit'].replace('€', '').replace('M', ''));
       }
       if (field === 'grossMargin') return company.grossMargin;
-      return (company as any)[field];
+      // fallback for other fields, type-safe
+      if (field in company) {
+        return company[field as keyof Company];
+      }
+      return undefined;
     };
 
     filtered.sort((a, b) => {
@@ -54,10 +61,15 @@ const Companies = () => {
       if (typeof aValue === 'string') aValue = aValue.toLowerCase();
       if (typeof bValue === 'string') bValue = bValue.toLowerCase();
 
+      // Handle undefined values for type safety
+      if (aValue === undefined && bValue === undefined) return 0;
+      if (aValue === undefined) return 1;
+      if (bValue === undefined) return -1;
+
       if (sortDirection === 'asc') {
-        return aValue > bValue ? 1 : -1;
+        return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       } else {
-        return aValue < bValue ? 1 : -1;
+        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
     });
 
