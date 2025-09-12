@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import {
   TrendingUp,
   TrendingDown,
@@ -9,10 +9,21 @@ import {
   DollarSign,
   PieChart,
   Building2,
-  MoreHorizontal
+  MoreHorizontal,
+  LogOut,
+  Settings,
+  HelpCircle,
+  BarChart3,
+  ChevronDown
 } from 'lucide-react';
 import Sidebar from "@/components/layout/Sidebar";
+import Dropdown from "@/components/ui/Dropdown";
+import Modal from "@/components/ui/Modal";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
+import Header from './Header';
+import { SidebarContext } from '@/components/layout/Sidebar';
 
 // Mock data
 const revenueData = [
@@ -135,65 +146,145 @@ const MetricCard: React.FC<MetricCardProps> = ({ title, value, change, isPositiv
 );
 
 const Dashboard = () => {
+  const router = useRouter();
+  const [showMetricModal, setShowMetricModal] = useState(false);
+  const [selectedMetric, setSelectedMetric] = useState('');
+  const [showPageInfoModal, setShowPageInfoModal] = useState(false);
+  const [showFiscalYearModal, setShowFiscalYearModal] = useState(false);
+  const { collapsed } = useContext(SidebarContext);
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: '/login' });
+  };
+
+  const handleMetricCard = (title: string) => {
+    setSelectedMetric(title);
+    setShowMetricModal(true);
+  };
+
+  const handlePageInfo = () => {
+    setShowPageInfoModal(true);
+  };
+
+  const handleFiscalYear = () => {
+    setShowFiscalYearModal(true);
+  };
+
+  const notificationsOptions = [
+    {
+      label: 'Revenue target exceeded by 12.5%',
+      value: 'revenue',
+      icon: <TrendingUp className="w-4 h-4" />,
+      onClick: () => console.log('Revenue notification clicked')
+    },
+    {
+      label: 'New company added: TechCorp Ltd.',
+      value: 'company',
+      icon: <Building2 className="w-4 h-4" />,
+      onClick: () => console.log('Company notification clicked')
+    },
+    {
+      label: 'Quarterly review scheduled',
+      value: 'review',
+      icon: <Calendar className="w-4 h-4" />,
+      onClick: () => console.log('Review notification clicked')
+    }
+  ];
+
+  const messagesOptions = [
+    {
+      label: 'CEO: "Great work on Q4 performance!"',
+      value: 'ceo',
+      icon: <User className="w-4 h-4" />,
+      onClick: () => console.log('CEO message clicked')
+    },
+    {
+      label: 'Finance Team: "Budget review needed"',
+      value: 'finance',
+      icon: <DollarSign className="w-4 h-4" />,
+      onClick: () => console.log('Finance message clicked')
+    }
+  ];
+
+  const profileOptions = [
+    {
+      label: 'Profile Settings',
+      value: 'profile',
+      icon: <User className="w-4 h-4" />,
+      onClick: () => console.log('Profile settings clicked')
+    },
+    {
+      label: 'Account Settings',
+      value: 'account',
+      icon: <Settings className="w-4 h-4" />,
+      onClick: () => console.log('Account settings clicked')
+    },
+    {
+      label: 'Help & Support',
+      value: 'help',
+      icon: <HelpCircle className="w-4 h-4" />,
+      onClick: () => console.log('Help clicked')
+    },
+    {
+      label: 'Sign Out',
+      value: 'signout',
+      icon: <LogOut className="w-4 h-4" />,
+      onClick: handleSignOut
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
-
       {/* Main Content */}
-      <div className="ml-64">
-        {/* Header */}
-        <header className="bg-white border-b px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
-                <span>FY (2024-2025)</span>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <User className="w-8 h-8 text-gray-600 bg-orange-100 rounded-full p-2" />
-                <span className="text-sm font-medium text-gray-700">Queen Infra</span>
-              </div>
-              <Bell className="w-5 h-5 text-gray-600" />
-              <MessageSquare className="w-5 h-5 text-gray-600" />
-            </div>
-          </div>
-        </header>
-
+      <div className={`transition-all duration-300 ${collapsed ? 'ml-16' : 'ml-64'}`}>
+        <Header
+          title="Dashboard"
+          onPageInfo={handlePageInfo}
+          onFiscalYear={handleFiscalYear}
+          profileOptions={profileOptions}
+          notificationsOptions={notificationsOptions}
+          messagesOptions={messagesOptions}
+        />
         <div className="p-6">
           {/* KPI Cards */}
           <div className="grid grid-cols-4 gap-6 mb-8">
-            <MetricCard
-              title="Consolidated Revenue"
-              value="€24.5B"
-              change="+12.5%"
-              isPositive={true}
-              icon={DollarSign}
-            />
-            <MetricCard
-              title="Net Profit"
-              value="€40.5M"
-              change="+8.3% YoY"
-              isPositive={true}
-              icon={TrendingUp}
-            />
-            <MetricCard
-              title="EBITDA Margin"
-              value="14.6%"
-              change="-3.6% YoY"
-              isPositive={false}
-              icon={PieChart}
-            />
-            <MetricCard
-              title="Working Capital"
-              value="€25.7M"
-              change="-3.5% YoY"
-              isPositive={false}
-              icon={Building2}
-            />
+            <div onClick={() => handleMetricCard("Consolidated Revenue")} className="cursor-pointer">
+              <MetricCard
+                title="Consolidated Revenue"
+                value="€24.5B"
+                change="+12.5%"
+                isPositive={true}
+                icon={DollarSign}
+              />
+            </div>
+            <div onClick={() => handleMetricCard("Net Profit")} className="cursor-pointer">
+              <MetricCard
+                title="Net Profit"
+                value="€40.5M"
+                change="+8.3% YoY"
+                isPositive={true}
+                icon={TrendingUp}
+              />
+            </div>
+            <div onClick={() => handleMetricCard("EBITDA Margin")} className="cursor-pointer">
+              <MetricCard
+                title="EBITDA Margin"
+                value="14.6%"
+                change="-3.6% YoY"
+                isPositive={false}
+                icon={PieChart}
+              />
+            </div>
+            <div onClick={() => handleMetricCard("Working Capital")} className="cursor-pointer">
+              <MetricCard
+                title="Working Capital"
+                value="€25.7M"
+                change="-3.5% YoY"
+                isPositive={false}
+                icon={Building2}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-3 gap-6 mb-8">
@@ -407,6 +498,133 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <Modal
+        isOpen={showMetricModal}
+        onClose={() => setShowMetricModal(false)}
+        title={`${selectedMetric} Details`}
+        size="lg"
+      >
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-2">Current Value</h4>
+              <p className="text-2xl font-bold text-blue-600">
+                {selectedMetric === 'Consolidated Revenue' && '€24.5B'}
+                {selectedMetric === 'Net Profit' && '€40.5M'}
+                {selectedMetric === 'EBITDA Margin' && '14.6%'}
+                {selectedMetric === 'Working Capital' && '€25.7M'}
+              </p>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-2">Change</h4>
+              <p className="text-lg font-semibold text-green-600">
+                {selectedMetric === 'Consolidated Revenue' && '+12.5%'}
+                {selectedMetric === 'Net Profit' && '+8.3% YoY'}
+                {selectedMetric === 'EBITDA Margin' && '-3.6% YoY'}
+                {selectedMetric === 'Working Capital' && '-3.5% YoY'}
+              </p>
+            </div>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Historical Trend</h4>
+            <div className="h-32 bg-white rounded border flex items-center justify-center text-gray-500">
+              <BarChart3 className="w-8 h-8 mr-2" />
+              Chart visualization would go here
+            </div>
+          </div>
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={() => setShowMetricModal(false)}
+              className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              Close
+            </button>
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              Export Data
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showPageInfoModal}
+        onClose={() => setShowPageInfoModal(false)}
+        title="Dashboard Overview"
+        size="md"
+      >
+        <div className="space-y-4">
+          <p className="text-gray-600">
+            This dashboard provides a comprehensive view of your business performance with key metrics and insights.
+          </p>
+          <div className="space-y-3">
+            <h4 className="font-medium text-gray-900">Key Features:</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                Financial KPIs and metrics
+              </li>
+              <li className="flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                Revenue and profit trends
+              </li>
+              <li className="flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                Company performance data
+              </li>
+              <li className="flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                Key business insights
+              </li>
+            </ul>
+          </div>
+          <div className="flex justify-end">
+            <button
+              onClick={() => setShowPageInfoModal(false)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showFiscalYearModal}
+        onClose={() => setShowFiscalYearModal(false)}
+        title="Fiscal Year Information"
+        size="md"
+      >
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-2">Current Period</h4>
+              <p className="text-lg font-semibold">FY 2024-2025</p>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-2">Current Quarter</h4>
+              <p className="text-lg font-semibold">Q4 2024</p>
+            </div>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Performance Status</h4>
+            <p className="text-lg font-semibold text-green-600">Above Target</p>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Next Review</h4>
+            <p className="text-lg font-semibold">March 2025</p>
+          </div>
+          <div className="flex justify-end">
+            <button
+              onClick={() => setShowFiscalYearModal(false)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

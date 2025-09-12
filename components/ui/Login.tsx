@@ -11,7 +11,16 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [toast, setToast] = useState<{ message: string; type: 'info' | 'success' | 'error' } | null>(null)
   const router = useRouter()
+
+  // Toast auto-hide
+  React.useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [toast])
 
   const handleCredentialsLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,9 +46,40 @@ const LoginPage = () => {
     }
   }
 
+  const handleForgotPassword = () => {
+    setToast({
+      message: 'Please contact your system administrator to reset your password. Email: admin@flowstate.com, Phone: +1 (555) 123-4567',
+      type: 'info',
+    })
+  }
+
+  const handleSignUp = () => {
+    setToast({
+      message: 'To create a new account, please contact your system administrator. New accounts require approval from the IT department.',
+      type: 'info',
+    })
+  }
+
+  const handleDemoCredentials = () => {
+    setEmail('admin@example.com');
+    setPassword('password123');
+    setToast({
+      message: 'Demo credentials filled! Email: admin@example.com, Password: password123',
+      type: 'success',
+    })
+  }
+
 
   return (
     <div className="min-h-screen flex">
+      {/* Toast */}
+      {toast && (
+        <div className={`fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all
+          ${toast.type === 'success' ? 'bg-green-600' : toast.type === 'error' ? 'bg-red-600' : 'bg-blue-600'}`}
+        >
+          {toast.message}
+        </div>
+      )}
       {/* Left Side - Login Form */}
       <div className="flex-1 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-8">
@@ -115,9 +155,13 @@ const LoginPage = () => {
                   </button>
                 </div>
                 <div className="text-right mt-2">
-                  <a href="#" className="text-sm text-blue-600 hover:text-blue-800">
+                  <button 
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-sm text-blue-600 hover:text-blue-800"
+                  >
                     Forgot your password?
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -142,14 +186,23 @@ const LoginPage = () => {
                 <p className="text-sm text-blue-800 font-medium mb-2">Demo Credentials:</p>
                 <p className="text-sm text-blue-700">Email: admin@example.com</p>
                 <p className="text-sm text-blue-700">Password: password123</p>
+                <button 
+                  onClick={handleDemoCredentials}
+                  className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
+                >
+                  Click to fill demo credentials
+                </button>
               </div>
 
               {/* Sign Up Link */}
               <p className="text-center text-sm text-gray-600">
                 &quot;Don&apos;t have an account?&quot;{' '}
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-medium">
+                <button 
+                  onClick={handleSignUp}
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
                   Sign up
-                </a>
+                </button>
               </p>
             </div>
           </div>

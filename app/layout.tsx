@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import AuthProvider from "@/components/providers/authProvider";
 import { CompaniesProvider } from "@/components/providers/CompaniesProvider";
+import { SidebarProvider } from '@/components/layout/Sidebar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <CompaniesProvider>{children}</CompaniesProvider>
+          <SidebarProvider>
+            <CompaniesProvider>{children}</CompaniesProvider>
+          </SidebarProvider>
         </AuthProvider>
 
       </body>
