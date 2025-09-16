@@ -71,32 +71,32 @@ const LoginPage = () => {
 
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Toast */}
       {toast && (
-        <div className={`fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all
+        <div className={`fixed bottom-4 left-4 right-4 lg:bottom-6 lg:left-1/2 lg:right-auto lg:transform lg:-translate-x-1/2 z-50 px-4 lg:px-6 py-3 rounded-lg shadow-lg text-white text-sm font-medium transition-all
           ${toast.type === 'success' ? 'bg-green-600' : toast.type === 'error' ? 'bg-red-600' : 'bg-blue-600'}`}
         >
           {toast.message}
         </div>
       )}
       {/* Left Side - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-white">
-        <div className="w-full max-w-md space-y-8">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-white">
+        <div className="w-full max-w-md space-y-6 lg:space-y-8">
           {/* Logo */}
           <div className="text-center">
-            <div className="flex items-center justify-center mb-8">
+            <div className="flex items-center justify-center mb-6 lg:mb-8">
               <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
                 <div className="w-4 h-4 bg-white rounded-sm transform rotate-45"></div>
               </div>
-              <span className="text-2xl font-semibold text-gray-800">FlowState</span>
+              <span className="text-xl lg:text-2xl font-semibold text-gray-800">FlowState</span>
             </div>
           </div>
 
           {/* Login Form */}
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
-            <p className="text-gray-600 mb-8">Enter your email below to login to your account.</p>
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">Login</h2>
+            <p className="text-gray-600 mb-6 lg:mb-8">Enter your email below to login to your account.</p>
 
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
@@ -209,8 +209,8 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Right Side - Hero Section (Same as before) */}
-      <div className="flex-1 bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 relative overflow-hidden">
+      {/* Right Side - Hero Section */}
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-20 w-32 h-32 border-2 border-white rounded-full"></div>

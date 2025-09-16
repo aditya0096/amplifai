@@ -202,16 +202,16 @@ export default function AddCompanyPage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <Sidebar />
-        <div className="ml-64">
-          <header className="bg-white border-b px-6 py-4">
+        <div className="md:ml-64 lg:ml-64">
+          <header className="bg-white border-b px-4 lg:px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-semibold text-gray-900">Add New Company</h1>
+                <h1 className="text-xl lg:text-2xl font-semibold text-gray-900">Add New Company</h1>
               </div>
             </div>
           </header>
-          <div className="p-6">
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border p-8">
+          <div className="p-4 lg:p-6">
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border p-4 lg:p-8">
               <div className="flex items-center justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                 <span className="ml-3 text-gray-600">Loading...</span>
@@ -228,25 +228,25 @@ export default function AddCompanyPage() {
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${collapsed ? 'ml-16' : 'ml-64'}`}>
+      <div className={`transition-all duration-200 ease-out ${collapsed ? 'lg:ml-16' : 'md:ml-64 lg:ml-64'}`}>
         <Header
           title="Add New Company"
           profileOptions={profileOptions}
           notificationsOptions={notificationsOptions}
           messagesOptions={messagesOptions}
         />
-        <div className="p-6">
+        <div className="p-4 lg:p-6">
           {/* Form Container */}
-          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border p-4 lg:p-8">
+            <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
                     <label className="block text-sm font-medium text-gray-700">Company Name *</label>
                     <button 
                       type="button"
                       onClick={() => handleFieldHelp("name")}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                      className="text-gray-400 hover:text-gray-600 transition-colors duration-150 ease-out"
                       title="Get help for this field"
                     >
                       <HelpCircle className="w-4 h-4" />
@@ -256,7 +256,7 @@ export default function AddCompanyPage() {
                     name="name" 
                     value={form.name} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="Enter company name"
                     required 
                   />
@@ -267,20 +267,20 @@ export default function AddCompanyPage() {
                     name="logo" 
                     value={form.logo} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="e.g. 🟣" 
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">CEO Name *</label>
                   <input 
                     name="ceoName" 
                     value={form.ceoName} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="Enter CEO name"
                     required 
                   />
@@ -291,20 +291,20 @@ export default function AddCompanyPage() {
                     name="ceoAvatar" 
                     value={form.ceoAvatar} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="e.g. 👨‍💼" 
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
                     <label className="block text-sm font-medium text-gray-700">Revenue (€M) *</label>
                     <button 
                       type="button"
                       onClick={() => handleFieldHelp("revenue")}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                      className="text-gray-400 hover:text-gray-600 transition-colors duration-150 ease-out"
                       title="Get help for this field"
                     >
                       <HelpCircle className="w-4 h-4" />
@@ -314,7 +314,7 @@ export default function AddCompanyPage() {
                     name="revenue" 
                     value={form.revenue} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="e.g. €100M"
                     required 
                   />
@@ -325,21 +325,21 @@ export default function AddCompanyPage() {
                     name="profit" 
                     value={form.profit} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="e.g. €10M"
                     required 
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">EBITDA (€M)</label>
                   <input 
                     name="ebitda" 
                     value={form.ebitda} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     placeholder="e.g. €5M" 
                   />
                 </div>
@@ -349,7 +349,7 @@ export default function AddCompanyPage() {
                     name="grossMargin" 
                     value={form.grossMargin} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                     type="number" 
                     step="0.1" 
                     placeholder="e.g. 20.5" 
@@ -363,19 +363,19 @@ export default function AddCompanyPage() {
                   name="keyInsights" 
                   value={form.keyInsights} 
                   onChange={handleChange} 
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out" 
                   placeholder="e.g. Strong Growth, Tech Innovation" 
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Revenue Change</label>
                   <select 
                     name="revenueChange" 
                     value={form.revenueChange} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out"
                   >
                     <option value="positive">Positive</option>
                     <option value="negative">Negative</option>
@@ -387,7 +387,7 @@ export default function AddCompanyPage() {
                     name="profitChange" 
                     value={form.profitChange} 
                     onChange={handleChange} 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors duration-150 ease-out"
                   >
                     <option value="positive">Positive</option>
                     <option value="negative">Negative</option>
@@ -406,34 +406,34 @@ export default function AddCompanyPage() {
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-6 border-t">
-                <div className="flex items-center space-x-3">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 lg:pt-6 border-t space-y-3 sm:space-y-0">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                   <button 
                     type="button" 
                     onClick={handleClearForm}
-                    className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-150 ease-out"
                   >
                     Clear Form
                   </button>
                   <button 
                     type="button" 
                     onClick={handleSaveDraft}
-                    className="px-4 py-2 text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 transition-colors"
+                    className="px-4 py-2 text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 transition-colors duration-150 ease-out"
                   >
                     Save Draft
                   </button>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                   <button 
                     type="button" 
                     onClick={() => router.push("/companies")}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-150 ease-out"
                   >
                     Cancel
                   </button>
                   <button 
                     type="submit" 
-                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-150 ease-out font-medium"
                   >
                     Add Company
                   </button>

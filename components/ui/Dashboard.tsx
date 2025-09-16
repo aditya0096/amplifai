@@ -237,7 +237,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${collapsed ? 'ml-16' : 'ml-64'}`}>
+      <div className={`transition-all duration-200 ease-out ${collapsed ? 'lg:ml-16' : 'md:ml-64 lg:ml-64'}`}>
         <Header
           title="Dashboard"
           onPageInfo={handlePageInfo}
@@ -246,10 +246,10 @@ const Dashboard = () => {
           notificationsOptions={notificationsOptions}
           messagesOptions={messagesOptions}
         />
-        <div className="p-6">
+        <div className="p-4 lg:p-6">
           {/* KPI Cards */}
-          <div className="grid grid-cols-4 gap-6 mb-8">
-            <div onClick={() => handleMetricCard("Consolidated Revenue")} className="cursor-pointer">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+            <div onClick={() => handleMetricCard("Consolidated Revenue")} className="cursor-pointer transition-transform duration-150 ease-out hover:scale-105">
               <MetricCard
                 title="Consolidated Revenue"
                 value="€24.5B"
@@ -258,7 +258,7 @@ const Dashboard = () => {
                 icon={DollarSign}
               />
             </div>
-            <div onClick={() => handleMetricCard("Net Profit")} className="cursor-pointer">
+            <div onClick={() => handleMetricCard("Net Profit")} className="cursor-pointer transition-transform duration-150 ease-out hover:scale-105">
               <MetricCard
                 title="Net Profit"
                 value="€40.5M"
@@ -267,7 +267,7 @@ const Dashboard = () => {
                 icon={TrendingUp}
               />
             </div>
-            <div onClick={() => handleMetricCard("EBITDA Margin")} className="cursor-pointer">
+            <div onClick={() => handleMetricCard("EBITDA Margin")} className="cursor-pointer transition-transform duration-150 ease-out hover:scale-105">
               <MetricCard
                 title="EBITDA Margin"
                 value="14.6%"
@@ -276,7 +276,7 @@ const Dashboard = () => {
                 icon={PieChart}
               />
             </div>
-            <div onClick={() => handleMetricCard("Working Capital")} className="cursor-pointer">
+            <div onClick={() => handleMetricCard("Working Capital")} className="cursor-pointer transition-transform duration-150 ease-out hover:scale-105">
               <MetricCard
                 title="Working Capital"
                 value="€25.7M"
@@ -287,12 +287,12 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
             {/* Revenue & Profit Trend */}
-            <div className="col-span-2 bg-white rounded-lg p-6 shadow-sm border">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">Revenue & Profit Trend</h3>
-                <div className="flex items-center space-x-4 text-sm">
+            <div className="lg:col-span-2 bg-white rounded-lg p-4 lg:p-6 shadow-sm border">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 lg:mb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 lg:mb-0">Revenue & Profit Trend</h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm">
                   <div className="flex items-center">
                     <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
                     <span className="text-gray-600">Revenue (Jan 25) €1.6M</span>
@@ -303,7 +303,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-64">
+              <div className="h-48 lg:h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={revenueData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -338,12 +338,12 @@ const Dashboard = () => {
             </div>
 
             {/* Margin Trends */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border">
-              <div className="flex items-center justify-between mb-6">
+            <div className="bg-white rounded-lg p-4 lg:p-6 shadow-sm border">
+              <div className="flex items-center justify-between mb-4 lg:mb-6">
                 <h3 className="text-lg font-semibold text-gray-900">Margin Trends</h3>
                 <span className="text-sm text-gray-500">(Last 4 Months)</span>
               </div>
-              <div className="h-64">
+              <div className="h-48 lg:h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={marginData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -364,7 +364,7 @@ const Dashboard = () => {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <div className="flex items-center justify-between mt-4 text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4 text-xs space-y-2 sm:space-y-0">
                 <div className="flex items-center">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
                   <span className="text-gray-600">Revenue</span>
@@ -381,10 +381,10 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mt-6 lg:mt-8">
             {/* Entity-wise Performance Table */}
-            <div className="col-span-2 bg-white rounded-lg shadow-sm border">
-              <div className="p-6 border-b">
+            <div className="lg:col-span-2 bg-white rounded-lg shadow-sm border">
+              <div className="p-4 lg:p-6 border-b">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">Entity-wise Performance</h3>
                   <button className="text-gray-400 hover:text-gray-600">
@@ -393,25 +393,25 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="w-full min-w-[600px]">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Company Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Revenue
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Net Profit
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         EBITDA
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Cash Flow(€M)
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         WC Cycle (Days)
                       </th>
                     </tr>
@@ -419,35 +419,35 @@ const Dashboard = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {performanceData.map((company) => (
                       <tr key={company.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <span className="text-2xl mr-3">{company.logo}</span>
-                            <span className="text-sm font-medium text-gray-900">{company.company}</span>
+                            <span className="text-xl lg:text-2xl mr-2 lg:mr-3">{company.logo}</span>
+                            <span className="text-xs lg:text-sm font-medium text-gray-900">{company.company}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                        <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 font-medium">
                           {company.revenue}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                           {company.netProfit}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             {company.ebitda.startsWith('+') ? (
-                              <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
+                              <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-green-500 mr-1" />
                             ) : (
-                              <TrendingDown className="w-4 h-4 text-red-500 mr-1" />
+                              <TrendingDown className="w-3 h-3 lg:w-4 lg:h-4 text-red-500 mr-1" />
                             )}
-                            <span className={`text-sm font-medium ${company.ebitda.startsWith('+') ? 'text-green-600' : 'text-red-600'
+                            <span className={`text-xs lg:text-sm font-medium ${company.ebitda.startsWith('+') ? 'text-green-600' : 'text-red-600'
                               }`}>
                               {company.ebitda}
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                           {company.cashFlow}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                           {company.wcCycle}
                         </td>
                       </tr>
@@ -457,7 +457,7 @@ const Dashboard = () => {
               </div>
             </div>
             {/* Insights Panel (Right Side) */}
-            <div className="bg-white rounded-lg shadow-lg border p-6 max-h-96 overflow-y-auto">
+            <div className="bg-white rounded-lg shadow-lg border p-4 lg:p-6 max-h-96 overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">📊 Insights</h3>
                 <button className="text-gray-400 hover:text-gray-600">

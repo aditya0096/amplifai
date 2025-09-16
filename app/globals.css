@@ -26,3 +26,45 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Mobile-specific styles */
+@media (max-width: 640px) {
+  /* Ensure touch targets are at least 44px */
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Improve text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Better touch scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Optimize for tablet viewing */
+  .container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1025px) {
+  /* Ensure proper desktop spacing */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}

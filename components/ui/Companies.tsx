@@ -360,31 +360,31 @@ const Companies = () => {
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${collapsed ? 'ml-16' : 'ml-64'}`}>
+      <div className={`transition-all duration-200 ease-out ${collapsed ? 'lg:ml-16' : 'md:ml-64 lg:ml-64'}`}>
         <Header
           title="List of Companies"
           profileOptions={profileOptions}
           notificationsOptions={notificationsOptions}
           messagesOptions={messagesOptions}
         />
-        <div className="p-6">
+        <div className="p-4 lg:p-6">
           {/* Controls Bar */}
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 lg:mb-2 space-y-4 lg:space-y-0">
             {/* Search Bar */}
-            <div className="flex items-center space-x-4">
-              <div className="relative">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <div className="relative w-full sm:w-auto">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search Companies..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-64"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full sm:w-64"
                 />
               </div>
               <Dropdown
                 trigger={
-                  <div className="flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                  <div className="flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-150 ease-out cursor-pointer">
                     <Filter className="w-4 h-4 mr-2 text-gray-500" />
                     <span className="text-gray-700">Filter</span>
                     <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
@@ -395,10 +395,10 @@ const Companies = () => {
               />
             </div>
             {/* Action Buttons */}
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
               <Dropdown
                 trigger={
-                  <div className="flex items-center px-4 py-2 text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
+                  <div className="flex items-center justify-center px-4 py-2 text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors duration-150 ease-out cursor-pointer">
                     <Download className="w-4 h-4 mr-2" />
                     <span>Export</span>
                     <ChevronDown className="w-4 h-4 ml-2" />
@@ -409,10 +409,11 @@ const Companies = () => {
               />
               <button 
                 onClick={() => window.location.href = '/add-company'}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-150 ease-out"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Add Company
+                <span className="hidden sm:inline">Add Company</span>
+                <span className="sm:hidden">Add</span>
               </button>
             </div>
           </div>
@@ -422,11 +423,11 @@ const Companies = () => {
             <div className="flex flex-wrap items-center gap-2 mb-6 mt-2">
               {Object.entries(filters).map(([type, value]) => (
                 value ? (
-                  <span key={type} className="inline-flex items-center bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-medium">
+                  <span key={type} className="inline-flex items-center bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-medium transition-colors duration-150 ease-out">
                     {getFilterLabel(type, value)}
                     <button
                       onClick={() => handleFilterChange(type, '')}
-                      className="ml-2 text-blue-500 hover:text-blue-700 focus:outline-none"
+                      className="ml-2 text-blue-500 hover:text-blue-700 focus:outline-none transition-colors duration-150 ease-out"
                       title="Remove filter"
                     >
                       &times;
@@ -444,7 +445,7 @@ const Companies = () => {
           )}
 
           {/* Results Info */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
             <p className="text-sm text-gray-600">
               Showing {startIndex + 1}-{Math.min(endIndex, filteredAndSortedCompanies.length)} of {filteredAndSortedCompanies.length} companies
             </p>
@@ -456,11 +457,11 @@ const Companies = () => {
           {/* Companies Table */}
           <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[800px]">
                 <thead className="bg-gray-50">
                   <tr>
                     <th 
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                       onClick={() => handleSort('name')}
                     >
                       <div className="flex items-center space-x-1">
@@ -470,11 +471,11 @@ const Companies = () => {
                         )}
                       </div>
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       CEO/Key Person
                     </th>
                     <th 
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                       onClick={() => handleSort('revenue')}
                     >
                       <div className="flex items-center space-x-1">
@@ -485,7 +486,7 @@ const Companies = () => {
                       </div>
                     </th>
                     <th 
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                       onClick={() => handleSort('profit')}
                     >
                       <div className="flex items-center space-x-1">
@@ -495,11 +496,11 @@ const Companies = () => {
                         )}
                       </div>
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       EBITDA
                     </th>
                     <th 
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                       onClick={() => handleSort('grossMargin')}
                     >
                       <div className="flex items-center space-x-1">
@@ -509,7 +510,7 @@ const Companies = () => {
                         )}
                       </div>
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Key Insights
                     </th>
                   </tr>
@@ -517,44 +518,44 @@ const Companies = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {currentCompanies.map((company) => (
                     <tr key={company.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleCompanyClick(company)}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <span className="text-2xl mr-3">{company.logo}</span>
-                          <span className="text-sm font-medium text-gray-900">{company.name}</span>
+                          <span className="text-xl lg:text-2xl mr-2 lg:mr-3">{company.logo}</span>
+                          <span className="text-xs lg:text-sm font-medium text-gray-900">{company.name}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <span className="text-lg mr-3">{company.ceo.avatar}</span>
-                          <span className="text-sm text-gray-900">{company.ceo.name}</span>
+                          <span className="text-base lg:text-lg mr-2 lg:mr-3">{company.ceo.avatar}</span>
+                          <span className="text-xs lg:text-sm text-gray-900">{company.ceo.name}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <span className="text-sm font-medium text-gray-900 mr-2">{company.revenue}</span>
+                          <span className="text-xs lg:text-sm font-medium text-gray-900 mr-1 lg:mr-2">{company.revenue}</span>
                           {company.revenueChange === 'positive' ? (
-                            <TrendingUp className="w-4 h-4 text-green-500" />
+                            <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-green-500" />
                           ) : (
-                            <TrendingDown className="w-4 h-4 text-red-500" />
+                            <TrendingDown className="w-3 h-3 lg:w-4 lg:h-4 text-red-500" />
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <span className="text-sm text-gray-900 mr-2">{company.profit}</span>
+                          <span className="text-xs lg:text-sm text-gray-900 mr-1 lg:mr-2">{company.profit}</span>
                           {company.profitChange === 'positive' ? (
-                            <TrendingUp className="w-4 h-4 text-green-500" />
+                            <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-green-500" />
                           ) : (
-                            <TrendingDown className="w-4 h-4 text-red-500" />
+                            <TrendingDown className="w-3 h-3 lg:w-4 lg:h-4 text-red-500" />
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                         {company.ebitda}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <span className={`text-sm font-medium mr-1 ${
+                          <span className={`text-xs lg:text-sm font-medium mr-1 ${
                             company.grossMargin > 20 ? 'text-green-600' : 
                             company.grossMargin > 10 ? 'text-yellow-600' : 'text-red-600'
                           }`}>
@@ -562,18 +563,18 @@ const Companies = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 lg:px-6 py-4">
                         <div className="flex flex-wrap gap-1">
                           {company.keyInsights.slice(0, 2).map((insight, index) => (
                             <span
                               key={index}
-                              className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full"
+                              className="inline-block px-1 lg:px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full"
                             >
                               {insight}
                             </span>
                           ))}
                           {company.keyInsights.length > 2 && (
-                            <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                            <span className="inline-block px-1 lg:px-2 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
                               +{company.keyInsights.length - 2}
                             </span>
                           )}
@@ -587,7 +588,7 @@ const Companies = () => {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-between mt-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between mt-6 space-y-4 sm:space-y-0">
             <button
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
